@@ -1,0 +1,20 @@
+{
+    "gender": [
+        "Male",
+        "Female"
+    ],
+    "consent_status": [
+        "GRANTED",
+        "DENIED",
+        "REVOKED"
+    ],
+    "marital_status": [
+        "Single",
+        "Married",
+        "Unmarried"
+    ],
+    "type": [
+        "New",
+        "Returning"
+    ]
+}
