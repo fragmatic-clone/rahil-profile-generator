@@ -11,6 +11,7 @@ print("Data Directory created successfully.")
 scope = os.getenv("SCOPE", "systemscope")
 domain = os.getenv("DOMAIN", "http://localhost:8085")
 exist_segments = os.getenv("EXIST_SEGMENTS", "").split(",")
+is_integration = os.getenv("INTEGRATION", "False")
 
 # GENERATOR TRACK COUNTERS
 profile_count = 0
@@ -54,6 +55,7 @@ def generate_profile(is_known,current_date):
                 "nbOfVisits": 1,
                 "lastVisit": current_date,
                 "firstVisit": current_date,
+                "latestCountry": 'US' if is_integration == "True" else random.choice(profile_properties['countries-code'])
             },
             "systemProperties": {
                 "lastUpdated": current_date,
@@ -65,8 +67,6 @@ def generate_profile(is_known,current_date):
                 "visitedPages": ['/'],
                 "firstDomain": domain,
                 "firstSessionLon": 6.1282508,
-                # "latestCountry": random.choice(profile_properties['countries-code'])
-                "latestCountry": 'US'
             },
             "segments": exist_segments,  
             "scores": {},
@@ -82,15 +82,14 @@ def generate_profile(is_known,current_date):
                 f"{scope}/GDPR:Advertising Cookies": {
                     "scope":  scope,
                     "typeIdentifier": "GDPR:Advertising Cookies",
-                    # "status": random.choice(profile_properties['others']['consent_status']),
-                    "status": 'GRANTED',
+                    "status": 'GRANTED' if is_integration == "True" else random.choice(profile_properties['others']['consent_status']),
                     "statusDate": "2027-03-04T04:16:37Z",
                     "revokeDate": "2028-03-04T04:16:37Z"
                 },
                 f"{scope}/GDPR:Strictly Necessary Cookies": {
                     "scope":  scope,
                     "typeIdentifier": "GDPR:Strictly Necessary Cookies",
-                    "status": random.choice(profile_properties['others']['consent_status']),
+                    "status": 'GRANTED' if is_integration == "True" else random.choice(profile_properties['others']['consent_status']),
                     "statusDate": "2024-03-04T04:16:37Z",
                     "revokeDate": "2025-03-04T04:16:37Z"
                 },
@@ -240,7 +239,7 @@ def generate_session(profile,current_date):
         profile['_source']['consents'], 
         current_date
     )
-    country = profile['_source']["systemProperties"].get('latestCountry','')
+    country = profile['_source']["properties"].get('latestCountry','')
     city = session_properties['others']['cities']
     session = {
         "_index": f"context-session-date-{current_date[:10].replace('-', '')}",
