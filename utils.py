@@ -55,7 +55,7 @@ def generate_profile(is_known,current_date):
                 "nbOfVisits": 1,
                 "lastVisit": current_date,
                 "firstVisit": current_date,
-                "latestCountry": 'US' if is_integration == "True" else random.choice(profile_properties['countries-code'])
+                "_countryCode": 'US' if is_integration == "True" else random.choice(profile_properties['countries-code'])
             },
             "systemProperties": {
                 "lastUpdated": current_date,
@@ -239,7 +239,7 @@ def generate_session(profile,current_date):
         profile['_source']['consents'], 
         current_date
     )
-    country = profile['_source']["properties"].get('latestCountry','')
+    country = profile['_source']["properties"].get('_countryCode','')
     city = session_properties['others']['cities']
     session = {
         "_index": f"context-session-date-{current_date[:10].replace('-', '')}",

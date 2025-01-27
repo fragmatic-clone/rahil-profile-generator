@@ -14,7 +14,7 @@ This guide provides instructions on setting up the necessary environment variabl
 ARCHITECTURE=new # Set to 'new' for new architecture or 'old' for old architecture
 
 # DynamoDB Configuration
-DYNAMO_PROFILE_TABLE=staging_rahil-profile # Change table name if required
+DYNAMO_PROFILE_TABLE= # Set dynamodb profile table name
 
 # AWS Configuration
 AWS_ACCESS_KEY_ID=
@@ -32,9 +32,10 @@ PG_PORT=
 ES_BASE_URL=
 
 # Fields Data
-SCOPE=
+SCOPE= 
 DOMAIN=
 EXIST_SEGMENTS= # specify where you want to include generated profiles
+INTEGRATION = False # Set "True" if need country=US and advertising_cookie=granted
 ```
 
 3. **Replace placeholders with actual values:**
